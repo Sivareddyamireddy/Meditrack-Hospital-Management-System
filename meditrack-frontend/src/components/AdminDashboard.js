@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./AdminDashboard.css"; // Add CSS styles
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const AdminDashboard = () => {
   const [patients, setPatients] = useState([]);
@@ -15,33 +16,33 @@ const AdminDashboard = () => {
 
   // Fetch Data
   const fetchPatients = async () => {
-    const res = await axios.get("http://localhost:5000/patients");
+    const res = await axios.get(`${backendUrl}/patients`);
     setPatients(res.data);
   };
 
   const fetchDoctors = async () => {
-    const res = await axios.get("http://localhost:5000/doctors");
+    const res = await axios.get(`${backendUrl}/doctors`);
     setDoctors(res.data);
   };
 
   const fetchAppointments = async () => {
-    const res = await axios.get("http://localhost:5000/appointments");
+    const res = await axios.get('${backendUrl}/appointments');
     setAppointments(res.data);
   };
 
   // Delete Functions
   const deletePatient = async (id) => {
-    await axios.delete(`http://localhost:5000/patients/${id}`);
+    await axios.delete(`${backendUrl}/patients/${id}`);
     fetchPatients();
   };
 
   const deleteDoctor = async (id) => {
-    await axios.delete(`http://localhost:5000/doctors/${id}`);
+    await axios.delete(`${backendUrl}/doctors/${id}`);
     fetchDoctors();
   };
 
   const deleteAppointment = async (id) => {
-    await axios.delete(`http://localhost:5000/appointments/${id}`);
+    await axios.delete(`${backendUrl}/appointments/${id}`);
     fetchAppointments();
   };
 

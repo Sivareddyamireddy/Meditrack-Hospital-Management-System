@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const Patients = () => {
   const [patients, setPatients] = useState([]);
@@ -7,34 +8,55 @@ const Patients = () => {
   const [age, setAge] = useState('');
   const [contact, setContact] = useState('');
   const [medicalHistory, setMedicalHistory] = useState('');
+  const backendUrl = process.env.REACT_APP_BACKEND_URL; // Use Environment Variable
 
   useEffect(() => {
     fetchPatients();
   }, []);
 
   const fetchPatients = async () => {
-    const res = await axios.get('http://localhost:5000/patients');
-    setPatients(res.data);
+    try {
+      const res = await axios.get(`${backendUrl}/patients`);
+      setPatients(res.data);
+    } catch (error) {
+      console.error('Error fetching patients:', error.message);
+    }
   };
 
   const addPatient = async () => {
-    await axios.post('http://localhost:5000/patients/add', { name, age, contact, medicalHistory });
-    fetchPatients();
+    if (!name || !age || !contact || !medicalHistory) {
+      alert('All fields are required!');
+      return;
+    }
+    try {
+      await axios.post(`${backendUrl}/patients/add`, { name, age, contact, medicalHistory });
+      fetchPatients();
+      setName('');
+      setAge('');
+      setContact('');
+      setMedicalHistory('');
+    } catch (error) {
+      console.error('Error adding patient:', error.message);
+    }
   };
 
   const deletePatient = async (id) => {
-    await axios.delete(`http://localhost:5000/patients/${id}`);
-    fetchPatients();
+    try {
+      await axios.delete(`${backendUrl}/patients/${id}`);
+      fetchPatients();
+    } catch (error) {
+      console.error('Error deleting patient:', error.message);
+    }
   };
 
   return (
     <div>
       <h2>Patients</h2>
-        Enter Patient Name<input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} required />
-        Enter Patient Age<input type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} required />
-        Enter Patient Contact no<input type="text" placeholder="Contact" onChange={(e) => setContact(e.target.value)} required />
-        Enter Patient Medical History<input type="text" placeholder="Medical History" onChange={(e) => setMedicalHistory(e.target.value)} required />
-        <button onClick={addPatient}>Add Patient</button>
+      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
+      <input type="number" placeholder="Age" value={age} onChange={(e) => setAge(e.target.value)} required />
+      <input type="text" placeholder="Contact" value={contact} onChange={(e) => setContact(e.target.value)} required />
+      <input type="text" placeholder="Medical History" value={medicalHistory} onChange={(e) => setMedicalHistory(e.target.value)} required />
+      <button onClick={addPatient}>Add Patient</button>
 
       <ul>
         {patients.map((patient) => (

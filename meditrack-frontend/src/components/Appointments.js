@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -17,7 +18,7 @@ const Appointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/appointments");
+      const res = await axios.get(`${backendUrl}/appointments`);
       setAppointments(res.data);
     } catch (error) {
       console.error("Error fetching appointments:", error);
@@ -26,7 +27,7 @@ const Appointments = () => {
 
   const fetchPatients = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/patients");
+      const res = await axios.get(`${backendUrl}/patients`);
       setPatients(res.data);
     } catch (error) {
       console.error("Error fetching patients:", error);
@@ -35,7 +36,7 @@ const Appointments = () => {
 
   const fetchDoctors = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/doctors");
+      const res = await axios.get(`${backendUrl}/doctors`);
       setDoctors(res.data);
     } catch (error) {
       console.error("Error fetching doctors:", error);
@@ -48,7 +49,7 @@ const Appointments = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:5000/appointments/schedule", {
+      await axios.post(`${backendUrl}/appointments/schedule`, {
         patient,
         doctor,
         date,
@@ -61,7 +62,7 @@ const Appointments = () => {
 
   const deleteAppointment = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/appointments/${id}`);
+      await axios.delete(`${backendUrl}/appointments/${id}`);
       fetchAppointments();
     } catch (error) {
       console.error("Error deleting appointment:", error);

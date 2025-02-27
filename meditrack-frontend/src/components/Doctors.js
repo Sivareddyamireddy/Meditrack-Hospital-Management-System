@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState([]);
@@ -12,17 +13,17 @@ const Doctors = () => {
   }, []);
 
   const fetchDoctors = async () => {
-    const res = await axios.get('http://localhost:5000/doctors');
+    const res = await axios.get(`${backendUrl}/doctors`);
     setDoctors(res.data);
   };
 
   const addDoctor = async () => {
-    await axios.post('http://localhost:5000/doctors/add', { name, specialty, contact });
+    await axios.post(`${backendUrl}/doctors/add`, { name, specialty, contact });
     fetchDoctors();
   };
 
   const deleteDoctor = async (id) => {
-    await axios.delete(`http://localhost:5000/doctors/${id}`);
+    await axios.delete(`${backendUrl}/doctors/${id}`);
     fetchDoctors();
   };
 
