@@ -1,0 +1,163 @@
+admin
+Signup -> POST http://localhost:5000/api/auth/signup
+  
+  {
+  "name": "admin",
+  "email": "admin@gmail.com",
+  "password": "securepassword",
+  "role": "admin"
+}
+
+Login -> POST http://localhost:5000/api/auth/login
+{
+  "email": "admin@examplw.com",
+  "password": "securepassword"
+}
+
+Add a Doctor (Admin Only)
+
+POST http://localhost:5000/api/doctors/add
+
+headers
+Authorization: Bearer your_admin_jwt_token
+Content-Type: application/json
+
+Body(json)
+{
+  "name": "Dr. John Doe",
+  "specialization": "Cardiology",
+  "experience": 10,
+  "contact": "9876543210",
+  "availableDays": ["Monday", "Thursday"]
+}
+
+Update Doctor (Admin Only)
+PUT http://localhost:5000/api/doctors/update/:id
+{ "experience": 12 }
+
+
+Delete Doctor (Admin Only)
+DELETE http://localhost:5000/api/doctors/delete/:id
+
+
+
+Get All Doctors (Anyone)
+GET http://localhost:5000/api/doctors/
+
+
+Add a Patient (Admin Only)
+  POST http://localhost:5000/api/patients/add
+
+    Headers
+        Authorization: Bearer your_admin_jwt_token
+        Content-Type: application/json
+
+    Body (JSON):
+        {
+         "name": "Alice Smith",
+        "age": 28,
+        "gender": "Female",
+        "contact": "9876543211",
+        "address": "Hyderabad, India",
+        "medicalHistory": ["Diabetes", "High BP"],
+        "assignedDoctor": "64d5c25b5e05d"  // Doctor ID from the database
+        }
+
+Get All Patients (Admin & Doctors Only)
+    GET http://localhost:5000/api/patients/
+
+Get Patient Details (Patients Can Only View Their Own Data)
+    GET http://localhost:5000/api/patients/:id
+
+    Headers:
+        Authorization: Bearer your_patient_jwt_token
+
+Update Patient (Admin & Doctors Only)
+    PUT http://localhost:5000/api/patients/update/:id
+
+    Body:
+        { "medicalHistory": ["Diabetes", "High BP", "Asthma"] }
+
+
+
+Delete Patient (Admin Only)
+    DELETE http://localhost:5000/api/patients/delete/:id
+
+
+
+
+
+
+
+
+
+
+patient
+    signup -> POST http://localhost:5000/api/auth/signup
+
+        {
+        "name": "Alice Smith",
+        "email": "alice@example.com",
+        "password": "securepassword",
+        "role": "patient"
+        }
+    
+Login API -> POST http://localhost:5000/api/auth/login
+    {
+      "email": "alice@example.com",
+      "password": "securepassword"
+    }
+
+Book an Appointment (Patient Only)
+    POST http://localhost:5000/api/appointments/book
+
+    Headers:
+        Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX...
+        Content-Type: application/json
+
+{
+  "doctor": "64d5c25b5e05d", 
+  "date": "2025-02-20",
+  "timeSlot": "10:00 AM - 10:30 AM"
+}
+
+
+Doctor Views Their Appointments
+    GET http://localhost:5000/api/appointments/doctor
+
+    Headers:
+        Authorization: Bearer your_doctor_jwt_token
+
+Admin Views All Appointments
+    GET http://localhost:5000/api/appointments/
+
+    Headers
+        Authorization: Bearer your_admin_jwt_token
+
+Doctor Approves/Rejects Appointment
+    PUT http://localhost:5000/api/appointments/update/:id
+
+    Body
+        { "status": "Approved" }
+
+Cancel Appointment (Patients Only)
+    DELETE http://localhost:5000/api/appointments/cancel/:id
+
+
+
+
+doctor
+Signup -> POST http://localhost:5000/api/auth/signup
+  
+  {
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword",
+  "role": "doctor"
+}
+
+Login -> POST http://localhost:5000/api/auth/login
+{
+  "email": "john@example.com",
+  "password": "securepassword"
+}
