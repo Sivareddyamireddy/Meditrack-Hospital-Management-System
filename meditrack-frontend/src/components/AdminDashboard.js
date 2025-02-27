@@ -26,7 +26,7 @@ const AdminDashboard = () => {
   };
 
   const fetchAppointments = async () => {
-    const res = await axios.get('${backendUrl}/appointments');
+    const res = await axios.get(`${backendUrl}/appointments`);
     setAppointments(res.data);
   };
 

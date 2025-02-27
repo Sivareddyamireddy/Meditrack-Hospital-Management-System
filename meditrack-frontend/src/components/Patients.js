@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const Patients = () => {
   const [patients, setPatients] = useState([]);
@@ -52,10 +51,10 @@ const Patients = () => {
   return (
     <div>
       <h2>Patients</h2>
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
-      <input type="number" placeholder="Age" value={age} onChange={(e) => setAge(e.target.value)} required />
-      <input type="text" placeholder="Contact" value={contact} onChange={(e) => setContact(e.target.value)} required />
-      <input type="text" placeholder="Medical History" value={medicalHistory} onChange={(e) => setMedicalHistory(e.target.value)} required />
+      Enter Patient Name<input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
+      Enter Patient Number<input type="number" placeholder="Age" value={age} onChange={(e) => setAge(e.target.value)} required />
+      Enter Contact No<input type="text" placeholder="Contact" value={contact} onChange={(e) => setContact(e.target.value)} required />
+      Enter Medical History<input type="text" placeholder="Medical History" value={medicalHistory} onChange={(e) => setMedicalHistory(e.target.value)} required />
       <button onClick={addPatient}>Add Patient</button>
 
       <ul>
